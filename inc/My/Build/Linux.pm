@@ -80,14 +80,14 @@ sub ACTION_install {
 	
 	# For unixish systems, we must re-build with the new prefix so that all of
 	# the baked-in paths are correct. I just wanna say this:
-	#my $prefix = File::ShareDir::dist_dir('Alien-TinyCC');
+	#my $prefix = File::ShareDir::dist_dir('Alien-TinyCCx');
 	# Unfortunately, this won't work because File::ShareDir expects the
 	# folder to already exist.
 	
 	# Instead, I copy code from Alien::Base::ModuleBuild to calculate the
 	# sharedir location by-hand:
 	my $prefix = File::Spec->catdir($self->install_destination('lib'),
-		qw(auto share dist Alien-TinyCC));
+		qw(auto share dist Alien-TinyCCx));
 	
 	# Completely rebuild (and install) the compiler with the new prefix
 	File::Path::make_path($prefix);

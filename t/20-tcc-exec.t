@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 
-use Alien::TinyCC;
+use Alien::TinyCCx;
 
 # tcc should just be in my path, so let's build a c file and run it
 open my $out_fh, '>', 'test.c';

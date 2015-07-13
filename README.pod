@@ -1,6 +1,7 @@
-=head1 Alien::TinyCC
+=head1 Alien::TinyCCx
 
-A Perl Alien module for the Tiny C Compiler. This Perl distribution
+A Perl Alien module for the Tiny C Compiler with extended symbol table
+management. This Perl distribution
 distributes and contains the build steps necessary to ensure that the
 Tiny C Compiler is available on your system.
 
@@ -18,7 +19,7 @@ On Windows, you should omit the C<./> part of the C<Build> commands.
 
 =head1 DEVELOPMENT
 
-If you want to work on Alien::TCC itself, you will need to work with a clone of
+If you want to work on Alien::TCCx itself, you will need to work with a clone of
 this repository, as well as a clone of the tinycc subrepository. To set
 everything up, create a F<Build> file and run the C<devsetup> command:
 
@@ -60,7 +61,7 @@ under the src/ directory, for which the following notice is in effect:
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
 
-The Alien::TCC Perl module itself is distributed under the same terms as
+The Alien::TCCx Perl module itself is distributed under the same terms as
 Perl itself.	
 
 =cut

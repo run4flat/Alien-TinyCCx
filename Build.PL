@@ -25,8 +25,8 @@ my @build_requires = ('File::Copy::Recursive' => 0) if $^O =~ /MSWin/;
 
 # OK, ready to build:
 $class->new(
-	module_name => 'Alien::TinyCC',
-	dist_abstract => 'Ensure the Tiny C Compiler is installed on your system',
+	module_name => 'Alien::TinyCCx',
+	dist_abstract => 'Ensure the Tiny C Compiler with extended symbol table management is installed on your system',
 	dist_author => 'David Mertens <dcmertens.perl@gmail.com>',
 	license => 'perl',
 	@sharedir_args,
@@ -47,8 +47,8 @@ $class->new(
 	dynamic_config => 1,
 	meta_merge => {
 		resources  => {
-			repository => "http://github.com/run4flat/Alien-TinyCC",
-			bugtracker => "http://github.com/run4flat/Alien-TinyCC/issues",
+			repository => "http://github.com/run4flat/Alien-TinyCCx",
+			bugtracker => "http://github.com/run4flat/Alien-TinyCCx/issues",
 		},
 		no_index => {
 			file      => [ 'README.pod' ],

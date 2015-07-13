@@ -1,4 +1,4 @@
-package Alien::TinyCC;
+package Alien::TinyCCx;
 
 use strict;
 use warnings;
@@ -21,14 +21,14 @@ use Carp;
 # directory or not:
 my $dist_dir;
 
-my $mod_path = $INC{'Alien/TinyCC.pm'};
+my $mod_path = $INC{'Alien/TinyCCx.pm'};
 if ($mod_path =~ s/(.*)blib.*/$1share/) {
 	$dist_dir = $mod_path;
-	croak('Looks like Alien::TinyCC is being invoked from blib, but I cannot find build-time sharedir!')
+	croak('Looks like Alien::TinyCCx is being invoked from blib, but I cannot find build-time sharedir!')
 		unless -d $dist_dir;
 }
 else {
-	$dist_dir = File::ShareDir::dist_dir('Alien-TinyCC');
+	$dist_dir = File::ShareDir::dist_dir('Alien-TinyCCx');
 }
 
 ############################
@@ -82,25 +82,26 @@ __END__
 
 =head1 NAME
 
-Alien::TinyCC - retrieve useful information about the Alien installation of tcc
+Alien::TinyCCx - retrieve useful information about the Alien installation of tcc with
+extended symbol tables
 
 =head1 ALIEN SYNOPSIS
 
- use Alien::TinyCC;
+ use Alien::TinyCCx;
  
  
  ## libtcc location functions ##
  
  say 'The libtcc headers can be found in ',
-     Alien::TinyCC->libtcc_include_path;
+     Alien::TinyCCx->libtcc_include_path;
  say 'The libtcc library can be found in ',
-     Alien::TinyCC->libtcc_library_path;
+     Alien::TinyCCx->libtcc_library_path;
  
  
  ## tcc functions ##
  
  say 'The tcc executable can be found in ',
-     Alien::TinyCC->path_to_tcc;
+     Alien::TinyCCx->path_to_tcc;
  
  # Create a C file
  open my $out_fh, '>', 'test.c';
@@ -115,7 +116,7 @@ Alien::TinyCC - retrieve useful information about the Alien installation of tcc
  EOF
  close $out_fh;
  
- # Alien::TinyCC ensures that the tcc executable is
+ # Alien::TinyCCx ensures that the tcc executable is
  # in your PATH environment variable, so this Just Works:
  my $output = `tcc -run test.c`;
 
@@ -125,31 +126,31 @@ If you want to build against F<libtcc>, then in your F<Build.PL> file you
 should have something like this:
 
  use Module::Build;
- use Alien::TinyCC;
+ use Alien::TinyCCx;
  Module::Build->new(
      ...
 	 configure_requires => {
-         'Alien::TinyCC' => 0,
+         'Alien::TinyCCx' => 0,
          ...
 	 },
      build_requires => {
-         'Alien::TinyCC' => 0,
+         'Alien::TinyCCx' => 0,
          ...
      },
      requires => {
-         'Alien::TinyCC' => 0,
+         'Alien::TinyCCx' => 0,
          ...
      },
      needs_compiler => 1,
      dynamic_config => 1,
-     include_dirs => [Alien::TinyCC->libtcc_include_path],
-     extra_linker_flags => [Alien::TinyCC->MB_linker_flags],
+     include_dirs => [Alien::TinyCCx->libtcc_include_path],
+     extra_linker_flags => [Alien::TinyCCx->MB_linker_flags],
  )->create_build_script
 
 At the top of the Perl module that provides the Perl libtcc interface:
 
  # My/C/Tiny/Interface.pm
- use Alien::TinyCC;  # set LD_LIBRARY_PATH, PATH, etc
+ use Alien::TinyCCx;  # set LD_LIBRARY_PATH, PATH, etc
  
  BEGIN {
      our $VERSION = '0.02';
@@ -170,9 +171,10 @@ In your XS file that interfaces with libtcc:
 
 =head1 DESCRIPTION
 
-This module ensures that you have a copy of the Tiny C Compiler accessible
+This module ensures that you have a copy of the Tiny C Compiler with
+extended symbol table management accessible
 to your Perl code, ensures that F<tcc> is in your path after saying
-C<use Alien::TinyCC>, ensures that F<libtcc> is in your C<LD_LIBRARY_PATH>
+C<use Alien::TinyCCx>, ensures that F<libtcc> is in your C<LD_LIBRARY_PATH>
 for Unixen and C<PATH> for Windows, and provides some functions for
 identifying those paths and building against them.
 
@@ -221,8 +223,10 @@ L<http://savannah.nongnu.org/projects/tinycc>.
 To learn more about Alien Perl distributions in general, read the L<Alien>
 manifesto.
 
-This library was built specifically to be used by the C code system provided
-by L<C::TinyCompiler>.
+This library was built to distributed my fork of the Tiny C Compiler with
+extended symbol tables, which I needed to implement L<C::Blocks>.
+
+This library is based on C<Alien::TinyCC>.
 
 =head1 AUTHOR
 
@@ -232,13 +236,13 @@ David Mertens (dcmertens.perl@gmail.com)
 
 Please report any bugs or feature requests for the Alien bindings at the
 project's main github page:
-L<http://github.com/run4flat/Alien-TinyCC/issues>.
+L<http://github.com/run4flat/Alien-TinyCCx/issues>.
 
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc Alien::TinyCC
+    perldoc Alien::TinyCCx
 
 You can also look for information at:
 
@@ -246,20 +250,20 @@ You can also look for information at:
 
 =item * The Github issue tracker (report bugs here)
 
-L<http://github.com/run4flat/Alien-TinyCC/issues>
+L<http://github.com/run4flat/Alien-TinyCCx/issues>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/Alien-TinyCC>
+L<http://annocpan.org/dist/Alien-TinyCCx>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/Alien-TinyCC>
+L<http://cpanratings.perl.org/d/Alien-TinyCCx>
 
 =item * Search CPAN
 
-L<http://p3rl.org/Alien::TinyCC>
-L<http://search.cpan.org/dist/Alien-TinyCC/>
+L<http://p3rl.org/Alien::TinyCCx>
+L<http://search.cpan.org/dist/Alien-TinyCCx/>
 
 =item * Stack Overflow
 
@@ -274,7 +278,7 @@ had the Windows install command nicely packaged up! How amazing!
 
 =head1 LICENSE AND COPYRIGHT
 
-Code copyright 2013 Dickinson College. Documentation copyright 2013 David
+Code copyright 2013, 2015 Dickinson College. Documentation copyright 2013, 2015 David
 Mertens.
 
 Everything not contained in the F<src/> directory is free software, the

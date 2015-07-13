@@ -6,8 +6,8 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
   [OTHER]
   
-  * The source repository is now my local fork so that I can work on the
-    extended symbol table API.
+  * Forked from v0.05 of Alien::TinyCC; the source repository is now my local
+    fork so that I can distribute the extended symbol table API.
 
 0.05  Mon, Sep 2, 2013
 

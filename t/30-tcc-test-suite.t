@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 
-use Alien::TinyCC;
+use Alien::TinyCCx;
 
 # Needed for quick patching
 use inc::My::Build;
