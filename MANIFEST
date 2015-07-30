@@ -6,7 +6,7 @@ inc/My/Build/Linux.pm
 inc/My/Build/MacOSX.pm
 inc/My/Build/Windows.pm
 inc/My/Build/BSD.pm
-lib/Alien/TinyCC.pm
+lib/Alien/TinyCCx.pm
 MANIFEST			This list of files
 README.pod
 src/Makefile        Normally not included by ./Build manifest,
@@ -165,9 +165,11 @@ src/win32/tools/tiny_impdef.c
 src/win32/tools/tiny_libmaker.c
 src/x86_64-asm.h
 src/x86_64-gen.c
+
 t/10-path-tests.t
 t/20-tcc-exec.t
 t/30-tcc-test-suite.t
+t/40-tcc-exsymtab-test-suite.t
 src/tests/tests2/00_assignment.c
 src/tests/tests2/00_assignment.expect
 src/tests/tests2/01_comment.c
