@@ -7,14 +7,21 @@ use Alien::TinyCCx;
 # execute or delete the tests, just creates them
 use inc::My::Build;
 
-# Run all of this from the test directory
+# Run all of this from the test directory (except on Windows)
 chdir 'src';
 chdir 'tests';
 chdir 'exsymtab';
+my @files = grep /^\d\d/, glob '*.c';
 
 My::Build::apply_patches('Makefile' =>
 	qr{lib_path=} => sub { 1 } # skip line
 );
+
+# Windows looks for the dll in the path. Add that location
+use Cwd qw(cwd abs_path);
+my $dll = abs_path('../../win32/libtcc.dll') if $^O =~ /Win32/;
+$ENV{PATH} = cwd() . '\\..\\..\\win32;' . $ENV{PATH}
+	if $^O =~ /Win32/;
 
 my $test_counter = 0;
 
@@ -32,11 +39,8 @@ sub test_compile {
 
 # Run through all the tests in the test suite. Run each test as a
 # subtest of this one.
-for my $test_file (glob('*.c')) {
-	
-	# Skip files that are not test files
-	next unless $test_file =~ /^\d\d-/;
-	
+print "1.." . scalar(@files), "\n";
+for my $test_file (@files) {
 	$test_counter++;
 	
 	# Print the test file name
@@ -46,8 +50,8 @@ for my $test_file (glob('*.c')) {
 	my @results;
 	if ($^O =~ /Win32/) {
 		next unless test_compile($test_file, 
-			"gcc $test_file -I libtcc -I ..\\tests\\exsymtab -I .. -L lib libtcc.dll -o tcc-test.exe 2>&1");
-		my @results = `tcc-test.exe lib_path=lib\\ 2>&1`;
+			"gcc $test_file -I ..\\..\\win32\\libtcc -I . -I ..\\.. \"$dll\" -o tcc-test.exe 2>&1");
+		my @results = `tcc-test.exe lib_path=..\\..\\win32\\lib\\ 2>&1`;
 	}
 	else {
 		my $test_name = $test_file;
@@ -68,5 +72,3 @@ for my $test_file (glob('*.c')) {
 		print "ok $test_counter - $test_file\n";
 	}
 }
-
-print "1..$test_counter\n";
