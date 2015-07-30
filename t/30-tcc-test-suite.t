@@ -48,7 +48,7 @@ for my $test_file (@test_files) {
 	$args = '- arg1 arg2 arg3 arg4' if $test_name =~ /args/;
 	
 	# Run the test, clear trailing whitespace
-	my $output = `tcc -run $test_file $args`;
+	my $output = `tcc -run $test_file $args 2>&1`;
 	$output =~ s/\s+\n/\n/g;
 	
 	# Tweak the output for the args test
