@@ -138,6 +138,17 @@ if (-f 'src/tcc.h') {
 			# Keep original code
 			print $out_fh $line;
 			
+			# Check if these changes have already been applied. The
+			# next line is either "#else" (which means not applied)
+			# or "#elif ..." (which means applied)
+			my $next_line = <$in_fh>;
+			if ($next_line =~ /elif/) {
+				# Nothing to do; return indicating we've handled the
+				# line.
+				print $out_fh $next_line;
+				return 1;
+			}
+			
 			# Apply a few preprocessor if/else lines, too
 			if ($line =~ /paddr/) {
 				print $out_fh <<'PADDR_PATCH';
@@ -158,6 +169,7 @@ FP_PATCH
 			else {
 				die "Unexpected patch line:\n$line";
 			}
+			print $out_fh $next_line;
 			
 			# patcher does *not* need to include this line, we've
 			# already done that.
