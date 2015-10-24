@@ -9,6 +9,9 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
   * New and improved patching for Mac and NetBSD
   
   * Added tentative support for Solaris
+  
+  * Remove stack protection on Linuxes; this was causing trouble on
+    recent vintages of Ubuntu.
 
 0.06  Sat, Aug 1, 2015
 

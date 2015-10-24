@@ -164,6 +164,23 @@ FP_PATCH
 			return 1;
 		},
 	);
+	
+	# Turn off stack protection
+	my $stack_protector_removed;
+	My::Build::apply_patches('src/Makefile',
+		qr/fno-stack-protector/ => sub {
+			$stack_protector_removed = 1;
+			return;
+		},
+	);
+	My::Build::apply_patches('src/Makefile',
+		qr/else # not GCC/ => sub {
+			my ($in_fh, $out_fh, $line) = @_;
+			print $out_fh "CFLAGS+=-fno-stack-protector\n"
+				unless $stack_protector_removed;
+			return;
+		},
+	);
 }
 
 1;
