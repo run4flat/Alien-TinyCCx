@@ -4,6 +4,8 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.07  DAY, MTH D, YYYY
 
+  * Updated to latest work including inline support for inline functions.
+  
   [ENHANCEMENTS]
   
   * New and improved patching for Mac and NetBSD
