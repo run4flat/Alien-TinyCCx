@@ -4,7 +4,9 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.08  DAY, MTH D, YYYY
 
-
+  [BUG FIXES]
+  
+  * Use "cc" instead of "gcc" on BSDs
 
 0.07  Wed, Dec 2, 2015
 

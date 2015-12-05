@@ -12,7 +12,7 @@ sub make_command { 'gmake' }
 
 my $is_midnight_handled = 0;
 
-# Apply patch for MidnightBSD
+# Apply patch for MidnightBSD, and using cc instead of gcc
 My::Build::apply_patches('src/configure' =>
 	# Note if we have already taken care of midnight bsd or not
 	qr/MidnightBSD\) noldl=yes;;/ => sub {
@@ -24,8 +24,14 @@ My::Build::apply_patches('src/configure' =>
 		print $out_fh "  MidnightBSD) noldl=yes;;\n"
 			unless $is_midnight_handled;
 		return 0;
+	},
+	# normal "cc" compiler instead of gcc
+	qr/cc="gcc"/ => sub {
+		my ($in_fh, $out_fh, $line) = @_;
+		$line =~ s/gcc/cc/;
+		print $out_fh $line;
+		return 1;
 	}
-	
 );
 
 1;
