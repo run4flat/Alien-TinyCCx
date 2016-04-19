@@ -5,6 +5,17 @@ management. This Perl distribution
 distributes and contains the build steps necessary to ensure that the
 Tiny C Compiler is available on your system.
 
+=head1 INSTALLATION FROM SOURCES
+
+If you are installing this directly from the sources on github, here are
+the steps you should take after downloading the tarball:
+
+ cpan Module::Build File::ShareDir File::Which
+ git submodule init
+ git submodule update
+
+Then follow the installation instructions in the next section.
+
 =head1 INSTALLATION
 
 I assume that if you are installing this module, you are doing so from
