@@ -51,13 +51,13 @@ for my $test_file (@files) {
 	if ($^O =~ /Win32/) {
 		next unless test_compile($test_file, 
 			"gcc $test_file -I ..\\..\\win32\\libtcc -I . -I ..\\.. \"$dll\" -o tcc-test.exe 2>&1");
-		my @results = `tcc-test.exe lib_path=..\\..\\win32\\lib\\ 2>&1`;
+		@results = `tcc-test.exe lib_path=..\\..\\win32\\lib\\ 2>&1`;
 	}
 	else {
 		my $test_name = $test_file;
 		$test_name =~ s/\.c/.test/;
 		next unless test_compile($test_file, "make $test_name");
-		my @results = `./$test_name lib_path=../.. 2>&1`;
+		@results = `./$test_name lib_path=../.. 2>&1`;
 	}
 	
 	# See if we hit any errors during execution
