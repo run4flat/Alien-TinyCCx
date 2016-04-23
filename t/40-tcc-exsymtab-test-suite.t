@@ -61,9 +61,9 @@ for my $test_file (@files) {
 	}
 	
 	# See if we hit any errors during execution
-	if (${^CHILD_ERROR_NATIVE} != 0) {
+	if ($? != 0) {
 		print "  1..1\n";
-		print "  not ok 1 - failed during execution:\n";
+		print "  not ok 1 - failed during execution with \$? = $?:\n";
 		print "#  $_" foreach (@results);
 		print "not ok $test_counter - $test_file\n";
 	}
