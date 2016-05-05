@@ -4,7 +4,11 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.09  DAY, MTH D, YYYY
 
-
+  [DEPENDENCIES]
+  
+  * Recently, extended symbol table work was brought back up-to-date with
+    the latest mob branch of tcc. The github branch with this work is
+    called 'mobx'. This Alien package now uses mobx as its subrepo.
 
 0.08  Sun, Apr 24, 2016
 
