@@ -4,6 +4,11 @@ use Test::More;
 
 use Alien::TinyCCx;
 
+use Config;
+for my $conf (qw(archname)) {
+	print "Config{$conf} = $Config{$conf}\n";
+}
+
 # Needed for quick patching
 use inc::My::Build;
 
