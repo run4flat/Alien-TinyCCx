@@ -50,7 +50,9 @@ unshift @PATH, path_to_tcc();
 # appropriately set.
 sub libtcc_library_path {
 	return $dist_dir if $^O =~ /MSWin/;
-	return File::Spec->catdir($dist_dir, 'lib');
+	my $lib_subdir = 'lib';
+	$lib_subdir .= '64' if $Config{archname} =~ /64/ and $Config{archname} !~ /arm/;
+	return File::Spec->catdir($dist_dir, $lib_subdir);
 }
 
 # Add library path on Unixish:

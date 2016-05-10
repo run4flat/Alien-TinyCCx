@@ -27,6 +27,9 @@ if ($^O =~ /MSWin/) {
 	$todo_message = 'Known to fail on Windows';
 	push @expected_to_fail, qr/24_math_library/, qr/28_strings/;
 }
+if ($Config{archname} !~ /arm/) {
+	push @expected_to_fail, qr/85-asm-outside-function.test/;
+}
 
 # Run through all the tests in the test suite, comparing the output to the
 # expected output
