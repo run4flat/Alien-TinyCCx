@@ -19,9 +19,9 @@ My::Build::apply_patches('Makefile' =>
 
 # Windows looks for the dll in the path. Add that location
 use Cwd qw(cwd abs_path);
-my $dll = abs_path('../../win32/libtcc.dll') if $^O =~ /Win32/;
+my $dll = abs_path('../../win32/libtcc.dll') if $^O =~ /Win/;
 $ENV{PATH} = cwd() . '\\..\\..\\win32;' . $ENV{PATH}
-	if $^O =~ /Win32/;
+	if $^O =~ /Win/;
 
 my $test_counter = 0;
 
@@ -48,10 +48,10 @@ for my $test_file (@files) {
 	
 	# Compile and run
 	my @results;
-	if ($^O =~ /Win32/) {
+	if ($^O =~ /Win/) {
 		next unless test_compile($test_file, 
 			"gcc $test_file -I ..\\..\\win32\\libtcc -I . -I ..\\.. \"$dll\" -o tcc-test.exe 2>&1");
-		@results = `tcc-test.exe lib_path=..\\..\\win32\\lib\\ 2>&1`;
+		@results = `tcc-test.exe lib_path=..\\..\\win32 2>&1`;
 	}
 	else {
 		my $test_name = $test_file;
