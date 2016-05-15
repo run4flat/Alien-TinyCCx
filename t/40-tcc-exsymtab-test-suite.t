@@ -47,28 +47,29 @@ for my $test_file (@files) {
 	print "# $test_file\n";
 	
 	# Compile and run
-	my @results;
+	my $results;
 	if ($^O =~ /Win/) {
 		next unless test_compile($test_file, 
 			"gcc $test_file -I ..\\..\\win32\\libtcc -I . -I ..\\.. \"$dll\" -o tcc-test.exe 2>&1");
-		@results = `tcc-test.exe lib_path=..\\..\\win32 2>&1`;
+		$results = `tcc-test.exe lib_path=..\\..\\win32 2>&1`;
 	}
 	else {
 		my $test_name = $test_file;
 		$test_name =~ s/\.c/.test/;
 		next unless test_compile($test_file, "make $test_name");
-		@results = `./$test_name lib_path=../.. 2>&1`;
+		$results = `./$test_name lib_path=../.. 2>&1`;
 	}
+	my @results = split /\n/, $results;
 	
 	# See if we hit any errors during execution
 	if ($? != 0) {
 		print "  1..1\n";
 		print "  not ok 1 - failed during execution with \$? = $?:\n";
-		print "#  $_" foreach (@results);
+		print "#  $_\n" foreach (@results);
 		print "not ok $test_counter - $test_file\n";
 	}
 	else {
-		print "  $_" foreach (@results);
+		print "  $_\n" foreach (@results);
 		print "ok $test_counter - $test_file\n";
 	}
 }
