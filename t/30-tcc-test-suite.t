@@ -18,18 +18,14 @@ my @test_files = grep {
 } glob 'src/tests/tests2/*.c';
 
 # Tabulate known failure points
-my (@expected_to_fail, $todo_message);
-if ($^O =~ /darwin/) {
-	$todo_message = 'Known to fail on Mac';
-	push @expected_to_fail, qr/40_stdio/;
-}
-if ($^O =~ /MSWin/) {
-	$todo_message = 'Known to fail on Windows';
-	push @expected_to_fail, qr/24_math_library/, qr/28_strings/;
-}
-if ($Config{archname} !~ /arm/) {
-	push @expected_to_fail, qr/85-asm-outside-function.test/;
-}
+my @expected_to_fail = ([qr/73_arm64/
+	=> 'Seems to inexplicably fail on some systems']);
+push @expected_to_fail, [qr/40_stdio/ => 'Known to fail on Mac']
+	if $^O =~ /darwin/;
+push @expected_to_fail, [qr/24_math_library/, qr/28_strings/
+	=> 'Known to fail on Windows'] if $^O =~ /MSWin/;
+push @expected_to_fail, [qr/85-asm-outside-function/
+	=> 'Fails on ARM systems'] if $Config{archname} =~ /arm/;
 
 # Run through all the tests in the test suite, comparing the output to the
 # expected output
@@ -84,8 +80,14 @@ for my $test_file (@test_files) {
 	
 	TODO: {
 		# note any expected failures
-		local $TODO = $todo_message
-			if grep { $test_file =~ $_ } @expected_to_fail;
+		my $todo_message;
+		for my $known_fail (@expected_to_fail) {
+			my @tests = @$known_fail;
+			my $curr_message = pop @tests;
+			$todo_message = $curr_message
+				if grep { $test_file =~ $_ } @tests;
+		}
+		local $TODO = $todo_message;
 		
 		is($output, $expected, "tcc test $test_file");
 	}
