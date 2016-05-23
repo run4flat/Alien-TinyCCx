@@ -22,7 +22,7 @@ my @expected_to_fail = ([qr/73_arm64/
 	=> 'Seems to inexplicably fail on some systems']);
 push @expected_to_fail, [qr/40_stdio/ => 'Known to fail on Mac']
 	if $^O =~ /darwin/;
-push @expected_to_fail, [qr/24_math_library/, qr/28_strings/
+push @expected_to_fail, [qr/24_math_library/, qr/28_strings/, qr/7\d_vla/
 	=> 'Known to fail on Windows'] if $^O =~ /MSWin/;
 push @expected_to_fail, [qr/85-asm-outside-function/
 	=> 'Fails on ARM systems'] if $Config{archname} =~ /arm/;
