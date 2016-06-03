@@ -4,6 +4,10 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.10  Ddd, Mth #, 201#
 
+  [BUG FIXES]
+  
+  * Fix 64-bit cpu specification for call to configure on Macs.
+
 0.09  Mon, May 30, 2016
 
   [DEPENDENCIES]

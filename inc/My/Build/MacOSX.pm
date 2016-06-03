@@ -13,7 +13,7 @@ my $extra_config_args = '--cpu=x86';
 open my $out_fh, '>', '_test.h';
 print $out_fh "\n";
 close $out_fh; 
-$extra_config_args .= '-64' if `gcc -E -dM _test.h` =~ /__x86_64__/;
+$extra_config_args .= '_64' if `gcc -E -dM _test.h` =~ /__x86_64__/;
 unlink '_test.h';
 sub extra_config_args { $extra_config_args }
 
