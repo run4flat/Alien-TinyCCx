@@ -4,6 +4,11 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.11  Ddd, Mth #, 201#
 
+  [BUG FIXES]
+  
+  * BSDs were switched to use cc, but that is clang (at least on some
+    BSDs) so we need to add the heinous-gnu-extensions flag.
+
 0.10  Thu, June 2, 2016
 
   [BUG FIXES]

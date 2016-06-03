@@ -34,4 +34,21 @@ My::Build::apply_patches('src/configure' =>
 	}
 );
 
+# Apply patches for FreeBSD, which uses clang, but calls it cc
+My::Build::apply_patches('src/Makefile' =>
+
+	# Suck up the lines for identifying gnuisms: just apply them
+	qr/ifneq.*findstring gcc.*CC.*gcc/ => sub {
+		my ($in_fh, $out_fh, $line) = @_;
+		$line = <$in_fh>; # skip ifeq clan
+		$line = <$in_fh>; # skip comment line
+		$line = <$in_fh>; # grab flag addendum line
+		print $out_fh $line;
+		$line = <$in_fh>; # skip endif
+		$line = <$in_fh>; # skip endif
+		return 0;
+	},
+);
+
+
 1;
