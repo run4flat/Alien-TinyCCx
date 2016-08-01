@@ -8,6 +8,11 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
   
   * BSDs were switched to use cc, but that is clang (at least on some
     BSDs) so we need to add the heinous-gnu-extensions flag.
+  
+  * Add patch for Mac OSX to #define _VA_LIST_T. Macs were hitting trouble
+    with incompatible preprocessor definitions. If the macros and internal
+    definitions had all been expanded, the definitions for variadic function
+    lists would have been the same, but tcc doesn't know that.
 
 0.10  Thu, June 2, 2016
 

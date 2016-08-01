@@ -47,4 +47,24 @@ sub install_to_prefix {
     $self->SUPER::install_to_prefix($prefix);
 }
 
+# Alter stdarg.h to #define _VA_LIST_T so we don't hit trouble with
+# two conflicting definitions
+if (-f 'src/tcc.h') {
+	my $va_list_t_defined;
+	My::Build::apply_patches('src/include/stdarg.h',
+		qr/#define _VA_LIST_T/ => sub {
+			$va_list_t_defined = 1;
+			return;
+		},
+	);
+	My::Build::apply_patches('src/include/stdarg.h',
+		qr/#ifndef _WIN64/ => sub {
+			my ($in_fh, $out_fh, $line) = @_;
+			print $out_fh "#define _VA_LIST_T\n"
+				unless $va_list_t_defined;
+			return;
+		}
+	);
+}
+
 1;
