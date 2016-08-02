@@ -46,7 +46,7 @@ My::Build::apply_patches('src/Makefile' =>
 		print $out_fh $line;
 		$line = <$in_fh>; # skip endif
 		$line = <$in_fh>; # skip endif
-		return 0;
+		return 1;         # go to next line; do not print this one
 	},
 );
 
