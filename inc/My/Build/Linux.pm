@@ -129,53 +129,51 @@ if (-f 'src/tcc.h') {
 			return 1;
 		},
 	);
-	
-	# Apply patch to keep NetBSD and Cygwin happy
-	My::Build::apply_patches('src/tccrun.c',
-		qr/uc->uc_mcontext\.mc_r[bi]p;/ => sub {
-			my ($in_fh, $out_fh, $line) = @_;
-			
-			# Keep original code
-			print $out_fh $line;
-			
-			# Check if these changes have already been applied. The
-			# next line is either "#else" (which means not applied)
-			# or "#elif ..." (which means applied)
-			my $next_line = <$in_fh>;
-			if ($next_line =~ /elif/) {
-				# Nothing to do; return indicating we've handled the
-				# line.
-				print $out_fh $next_line;
-				return 1;
-			}
-			
-			# Apply a few preprocessor if/else lines, too
-			if ($line =~ /paddr/) {
-				print $out_fh <<'PADDR_PATCH';
-#elif defined(__NetBSD__)
-        *paddr = uc->uc_mcontext.__gregs[_REG_RIP];
-#elif defined(__CYGWIN__)
-        *paddr = uc->uc_mcontext.rip;
-PADDR_PATCH
-			}
-			elsif ($line =~ /fp/) {
-				print $out_fh <<'FP_PATCH';
-#elif defined(__NetBSD__)
-        fp = uc->uc_mcontext.__gregs[_REG_RBP];
-#elif defined(__CYGWIN__)
-        fp = uc->uc_mcontext.rbp;
-FP_PATCH
-			}
-			else {
-				die "Unexpected patch line:\n$line";
-			}
-			print $out_fh $next_line;
-			
-			# patcher does *not* need to include this line, we've
-			# already done that.
-			return 1;
-		},
-	);
+
+#### IGNORING FOR NOW. I think this needs to be applied, but I don't
+#### have any test reports from Cygwin to tell me what to do.
+#	# Apply patch to keep Cygwin happy
+#	My::Build::apply_patches('src/tccrun.c',
+#		qr/uc->uc_mcontext\.mc_r[bi]p;/ => sub {
+#			my ($in_fh, $out_fh, $line) = @_;
+#			
+#			# Keep original code
+#			print $out_fh $line;
+#			
+#			# Check if these changes have already been applied. The
+#			# next line is either "#else" (which means not applied)
+#			# or "#elif ..." (which means applied)
+#			my $next_line = <$in_fh>;
+#			if ($next_line =~ /elif/) {
+#				# Nothing to do; return indicating we've handled the
+#				# line.
+#				print $out_fh $next_line;
+#				return 1;
+#			}
+#			
+#			# Apply a few preprocessor if/else lines, too
+#			if ($line =~ /paddr/) {
+#				print $out_fh <<'PADDR_PATCH';
+##elif defined(__CYGWIN__)
+#        *paddr = uc->uc_mcontext.rip;
+#PADDR_PATCH
+#			}
+#			elsif ($line =~ /fp/) {
+#				print $out_fh <<'FP_PATCH';
+##elif defined(__CYGWIN__)
+#        fp = uc->uc_mcontext.rbp;
+#FP_PATCH
+#			}
+#			else {
+#				die "Unexpected patch line:\n$line";
+#			}
+#			print $out_fh $next_line;
+#			
+#			# patcher does *not* need to include this line, we've
+#			# already done that.
+#			return 1;
+#		},
+#	);
 	
 	# Turn off stack protection
 	my $stack_protector_removed;
