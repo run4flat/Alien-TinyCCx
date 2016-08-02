@@ -50,5 +50,14 @@ My::Build::apply_patches('src/Makefile' =>
 	},
 );
 
+# Apply patch for FreeBSD. Since we define our own va_list stuff in
+# stdarg.h, we need to define _VA_LIST_DECLARED at the end of stdarg.h
+My::Build::apply_patches('src/include/stdarg.h' =>
+	qr/#endif \/\* _STDARG_H \*\// => sub {
+		my (undef, $out_fh) = @_;
+		print $out_fh "#define _VA_LIST_DECLARED\n";
+		return 0; # let apply_patches print the matched line for me
+	},
+);
 
 1;
