@@ -13,6 +13,11 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
     with incompatible preprocessor definitions. If the macros and internal
     definitions had all been expanded, the definitions for variadic function
     lists would have been the same, but tcc doesn't know that.
+  
+  [OTHER]
+  
+  * The test suite has been made robust against compiler warnings. It now
+    searches for expected printouts as substrings of the obtained printouts.
 
 0.10  Thu, June 2, 2016
 

@@ -89,8 +89,24 @@ for my $test_file (@test_files) {
 		}
 		local $TODO = $todo_message;
 		
-		is($output, $expected, "tcc test $test_file");
+		is_substring($output, $expected, "tcc test $test_file");
 	}
 }
 
 done_testing;
+
+# The purpose of this function is to check if the expected printout is
+# part of what was actually printed. This makes this test immune to
+# warnings, such as in
+# http://www.cpantesters.org/cpan/report/a5fc4ca8-5788-11e6-bb69-be43cba39ea2
+sub is_substring {
+	my ($got, $substring, $description) = @_;
+	ok(index($got, $substring) > -1, $description) and return 1;
+	
+	# Only make it here if the test failed. Print diagnostics.
+	diag "Got";
+	diag "    $_" foreach (split /\n/, $got);
+	diag "Expected to find this substring:";
+	diag "    $_" foreach (split /\n/, $substring);
+	return;
+}
