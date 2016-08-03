@@ -5,8 +5,8 @@ use Test::More;
 use Alien::TinyCCx;
 
 sub diag_dir {
-	my ($path, $description) = @_;
-	diag("$description path is [$path] and contains:");
+	my ($name, $path) = @_;
+	diag("$name path is [$path] and contains:");
 	
 	# Print out all the files in the directory, in the hopes I might
 	# be able to pick out the right extension for this OS from the
