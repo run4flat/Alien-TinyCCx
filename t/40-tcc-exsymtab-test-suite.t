@@ -32,8 +32,9 @@ sub test_compile {
 	
 	# Failed: explain
 	print "  1..1\n";
-	print "  not ok 1 - failed to compile:\n";
-	print "# $_" foreach @compile_message;
+	print "  not ok 1 - failed to compile\n";
+	print STDERR "\n\n# Failed test '$test_file' during compile:\n";
+	print STDERR "# $_" foreach @compile_message;
 	print "not ok $test_counter - $test_file\n";
 }
 
@@ -64,8 +65,9 @@ for my $test_file (@files) {
 	# See if we hit any errors during execution
 	if ($? != 0) {
 		print "  1..1\n";
-		print "  not ok 1 - failed during execution with \$? = $?:\n";
-		print "#  $_\n" foreach (@results);
+		print "  not ok 1 - failed during execution with \$? = $?\n";
+		print STDERR "\n\n# Failed test '$test_file' during execution:\n";
+		print STDERR "#  $_\n" foreach (@results);
 		print "not ok $test_counter - $test_file";
 		# Test 62 does not trip as an error on Windows. I'm pretty sure
 		# that the linker code is different for Windows, and it somehow
