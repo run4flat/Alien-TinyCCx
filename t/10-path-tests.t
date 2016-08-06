@@ -24,13 +24,10 @@ ok(-f Alien::TinyCCx->libtcc_include_path . '/libtcc.h',
 # Can we find the shared library?
 my $extension = '.a';
 $extension = '.dll' if $^O =~ /MSWin/;
-TODO: {
-	local $TODO = 'Shared library does not seem to exist on Macs???' if $^O =~ /darwin/;
-	
-	ok(-f Alien::TinyCCx->libtcc_library_path . "/libtcc$extension",
-		"libtcc$extension is in the given path")
-			or diag_dir('library', Alien::TinyCCx->libtcc_library_path);
-}
+
+ok(-f Alien::TinyCCx->libtcc_library_path . "/libtcc$extension",
+	"libtcc$extension is in the given path")
+		or diag_dir('library', Alien::TinyCCx->libtcc_library_path);
 
 my $exec = 'tcc';
 $exec .= '.exe' if $^O =~ /MSWin/;
