@@ -36,8 +36,50 @@ else {
 # Path retrieval functions #
 ############################
 
+# First we need to find a number of files of interest. Rather than guess
+# at these files' locations, we can perform a simple search for them
+# and store the locations that we find.
+my %files_to_find = (
+	bin => 'tcc',
+	lib => 'libtcc.',
+	inc => 'libtcc.h'
+);
+if ($^O =~ /MSWin/) {
+	$files_to_find{bin} .= '.exe';
+	$files_to_find{lib} .= 'dll';
+}
+else {
+	$files_to_find{lib} .= 'a';
+}
+my %path_for_file;
+
+# Otherwise go through all dirs and subdirs of dist_dir
+my @dirs = $dist_dir;
+while (@dirs) {
+	# Pull the next directory off the list
+	my $dir = shift @dirs;
+	
+	# Check if any of the unfound files are in this directory
+	for my $file_type (keys %files_to_find) {
+		if (-f File::Spec->catfile($dir, $files_to_find{$file_type})) {
+			delete $files_to_find{$file_type};
+			$path_for_file{$file_type} = $dir;
+		}
+	}
+	
+	# Otherwise, scan this directory for subdirectories
+	opendir (my $dh, $dir) or next;
+	CHILD: for my $child (readdir $dh) {
+		next CHILD if $child =~ /^\./; # skip dot-files and dot-dirs
+		my $full_path = File::Spec->catdir($dir, $child);
+		push @dirs, $full_path if -d $full_path;
+	}
+	close $dh;
+}
+
 # Find the path to the tcc executable
-sub path_to_tcc {
+sub path_to_tcc { $path_for_file{bin} }
+sub old_path_to_tcc {
 	return $dist_dir if $^O =~ /MSWin/;
 	return File::Spec->catdir($dist_dir, 'bin');
 }
@@ -48,7 +90,8 @@ unshift @PATH, path_to_tcc();
 # Find the path to the compiled libraries. Note that this is only applicable
 # on Unixish systems; Windows simply uses the %PATH%, which was already
 # appropriately set.
-sub libtcc_library_path {
+sub libtcc_library_path { $path_for_file{lib} }
+sub old_libtcc_library_path {
 	return $dist_dir if $^O =~ /MSWin/;
 	my $lib_subdir = 'lib';
 	$lib_subdir .= '64' if $Config{archname} =~ /64/ and $Config{archname} !~ /arm/;
@@ -64,7 +107,8 @@ elsif ($^O !~ /MSWin/) {
 }
 
 # Determine path for libtcc.h
-sub libtcc_include_path {
+sub libtcc_include_path { $path_for_file{inc} }
+sub old_libtcc_include_path {
 	return File::Spec->catdir($dist_dir, 'libtcc') if $^O =~ /MSWin/;
 	return File::Spec->catdir($dist_dir, 'include');
 }

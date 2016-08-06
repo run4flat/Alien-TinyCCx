@@ -4,6 +4,12 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.11  Ddd, Mth #, 201#
 
+  [DIFFERENT BEHAVIOR]
+  
+  * The binary, library, and include file locations are reported based on
+    the results of an actual subdirectory search, rather than by sheer
+    guesswork, as used to be the case.
+  
   [BUG FIXES]
   
   * BSDs were switched to use cc, but that is clang (at least on some
