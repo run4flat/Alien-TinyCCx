@@ -79,10 +79,6 @@ while (@dirs) {
 
 # Find the path to the tcc executable
 sub path_to_tcc { $path_for_file{bin} }
-sub old_path_to_tcc {
-	return $dist_dir if $^O =~ /MSWin/;
-	return File::Spec->catdir($dist_dir, 'bin');
-}
 
 # Modify the PATH environment variable to include tcc's directory
 unshift @PATH, path_to_tcc();
@@ -91,12 +87,6 @@ unshift @PATH, path_to_tcc();
 # on Unixish systems; Windows simply uses the %PATH%, which was already
 # appropriately set.
 sub libtcc_library_path { $path_for_file{lib} }
-sub old_libtcc_library_path {
-	return $dist_dir if $^O =~ /MSWin/;
-	my $lib_subdir = 'lib';
-	$lib_subdir .= '64' if $Config{archname} =~ /64/ and $Config{archname} !~ /arm/;
-	return File::Spec->catdir($dist_dir, $lib_subdir);
-}
 
 # Add library path on Unixish:
 if ($ENV{LD_LIBRARY_PATH}) {
@@ -108,10 +98,6 @@ elsif ($^O !~ /MSWin/) {
 
 # Determine path for libtcc.h
 sub libtcc_include_path { $path_for_file{inc} }
-sub old_libtcc_include_path {
-	return File::Spec->catdir($dist_dir, 'libtcc') if $^O =~ /MSWin/;
-	return File::Spec->catdir($dist_dir, 'include');
-}
 
 ###########################
 # Module::Build Functions #
