@@ -20,8 +20,6 @@ src/c67-gen.c
 src/Changelog
 src/CodingStyle
 src/coff.h
-src/config.h.in
-src/config.texi.in
 src/configure
 src/conftest.c
 src/COPYING
@@ -51,7 +49,6 @@ src/lib/armeabi.c
 src/lib/bcheck.c
 src/lib/lib-arm64.c
 src/lib/libtcc1.c
-src/lib/testfp.c
 src/libtcc.c
 src/libtcc.h
 src/README
@@ -76,7 +73,6 @@ src/tcctok.h
 src/tests/abitest.c
 src/tests/asmtest.S
 src/tests/boundtest.c
-src/tests/CMakeLists.txt
 src/tests/exsymtab/01-test-symtab-copy.c
 src/tests/exsymtab/10-symtab-compare-func-decl-and-def.c
 src/tests/exsymtab/20-two-contexts-define-share.c
@@ -319,12 +315,10 @@ src/texi2pod.pl
 src/TODO
 src/VERSION
 src/win32/build-tcc.bat
-src/win32/examples/demo.bat
 src/win32/examples/dll.c
 src/win32/examples/fib.c
 src/win32/examples/hello_dll.c
 src/win32/examples/hello_win.c
-src/win32/examples/taxi_simulator.c
 src/win32/include/_mingw.h
 src/win32/include/assert.h
 src/win32/include/conio.h
