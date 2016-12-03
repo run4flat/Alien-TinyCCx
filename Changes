@@ -4,6 +4,10 @@ OTHER. Entries should be in chronological order, i.e. oldest at the top
 
 0.13  DDD, Mth ##, 201#
 
+  [BUG FIXES]
+  
+  * Better diagnostic printing on TODO test in t/40
+
 0.12  Mon, Nov 28, 2016
 
   [DEPENDENCIES]

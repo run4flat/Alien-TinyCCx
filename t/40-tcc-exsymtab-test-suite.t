@@ -72,8 +72,10 @@ for my $test_file (@files) {
 		# Test 62 does not trip as an error on Windows. I'm pretty sure
 		# that the linker code is different for Windows, and it somehow
 		# handles this situation differently.
-		print ' # TODO - tcc on Windows does not report this error'
-			if $^O =~ /Win/ and $test_file =~ /62/;
+		if ($^O =~ /Win/ and $test_file =~ /62/) {
+			print ' # TODO - tcc on Windows does not report this error';
+			print STDERR "# TODO - tcc on Windows does not report this error\n";
+		}
 		print "\n";
 	}
 	else {
