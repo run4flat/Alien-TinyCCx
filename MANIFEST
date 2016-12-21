@@ -12,11 +12,12 @@ MANIFEST			This list of files
 META.json
 META.yml
 README.pod
-src/Makefile        Normally not included by ./Build manifest,
-src/lib/Makefile    but absolutely necessary for the alien build
 src/arm-gen.c
+src/arm-link.c
 src/arm64-gen.c
+src/arm64-link.c
 src/c67-gen.c
+src/c67-link.c
 src/Changelog
 src/CodingStyle
 src/coff.h
@@ -32,6 +33,7 @@ src/examples/ex5.c
 src/i386-asm.c
 src/i386-asm.h
 src/i386-gen.c
+src/i386-link.c
 src/i386-tok.h
 src/il-gen.c
 src/il-opcodes.h
@@ -49,8 +51,10 @@ src/lib/armeabi.c
 src/lib/bcheck.c
 src/lib/lib-arm64.c
 src/lib/libtcc1.c
+src/lib/Makefile
 src/libtcc.c
 src/libtcc.h
+src/Makefile
 src/README
 src/README.md
 src/RELICENSING
@@ -70,6 +74,7 @@ src/tccpe.c
 src/tccpp.c
 src/tccrun.c
 src/tcctok.h
+src/tests/42test.h
 src/tests/abitest.c
 src/tests/asmtest.S
 src/tests/boundtest.c
@@ -105,13 +110,14 @@ src/tests/exsymtab/83-cache-func-decl-with-args.c
 src/tests/exsymtab/84-cache-func-decl-with-pointer-args.c
 src/tests/exsymtab/85-cache-inline-func.c
 src/tests/exsymtab/dump-elf-syms.c
+src/tests/exsymtab/Makefile
 src/tests/exsymtab/mytest.pl
-src/tests/exsymtab/Makefile    necessary for the alien build
 src/tests/exsymtab/tap.h
 src/tests/exsymtab/test_setup.h
 src/tests/exsymtab/win-test.pl
 src/tests/gcctestsuite.sh
 src/tests/libtcc_test.c
+src/tests/Makefile
 src/tests/pp/01.c
 src/tests/pp/01.expect
 src/tests/pp/02.c
@@ -142,8 +148,15 @@ src/tests/pp/14.c
 src/tests/pp/14.expect
 src/tests/pp/15.c
 src/tests/pp/15.expect
+src/tests/pp/16.c
+src/tests/pp/16.expect
+src/tests/pp/17.c
+src/tests/pp/17.expect
+src/tests/pp/Makefile
 src/tests/tcctest.c
+src/tests/tcctest.h
 src/tests/tcctest.py
+src/tests/testfp.c
 src/tests/tests2/00_assignment.c
 src/tests/tests2/00_assignment.expect
 src/tests/tests2/01_comment.c
@@ -309,7 +322,18 @@ src/tests/tests2/84-hex-float.c
 src/tests/tests2/84-hex-float.expect
 src/tests/tests2/85-asm-outside-function.c
 src/tests/tests2/85-asm-outside-function.expect
+src/tests/tests2/86-memory-model.c
+src/tests/tests2/86-memory-model.expect
+src/tests/tests2/86-struct-init.c
+src/tests/tests2/86-struct-init.expect
+src/tests/tests2/87_dead_code.c
+src/tests/tests2/87_dead_code.expect
+src/tests/tests2/87_ptr_longlong_arith32.c
+src/tests/tests2/87_ptr_longlong_arith32.expect
+src/tests/tests2/88_codeopt.c
+src/tests/tests2/88_codeopt.expect
 src/tests/tests2/LICENSE
+src/tests/tests2/Makefile
 src/tests/vla_test.c
 src/texi2pod.pl
 src/TODO
@@ -331,6 +355,7 @@ src/win32/include/errno.h
 src/win32/include/excpt.h
 src/win32/include/fcntl.h
 src/win32/include/fenv.h
+src/win32/include/float.h
 src/win32/include/inttypes.h
 src/win32/include/io.h
 src/win32/include/limits.h
@@ -356,6 +381,9 @@ src/win32/include/sec_api/wchar_s.h
 src/win32/include/setjmp.h
 src/win32/include/share.h
 src/win32/include/signal.h
+src/win32/include/stdarg.h
+src/win32/include/stdbool.h
+src/win32/include/stddef.h
 src/win32/include/stdint.h
 src/win32/include/stdio.h
 src/win32/include/stdlib.h
@@ -374,6 +402,7 @@ src/win32/include/tchar.h
 src/win32/include/time.h
 src/win32/include/vadefs.h
 src/win32/include/values.h
+src/win32/include/varargs.h
 src/win32/include/wchar.h
 src/win32/include/wctype.h
 src/win32/include/winapi/_bsd_types.h
@@ -432,6 +461,8 @@ src/win32/lib/kernel32.def
 src/win32/lib/msvcrt.def
 src/win32/lib/user32.def
 src/win32/lib/wincrt1.c
+src/win32/libtcc/libtcc.def
+src/win32/libtcc/libtcc.h
 src/win32/tcc-win32.txt
 src/win32/tools/tiny_impdef.c
 src/win32/tools/tiny_libmaker.c
@@ -440,6 +471,7 @@ src/win32/vs2015/tcc.sln
 src/win32/vs2015/tcc.vcxproj
 src/x86_64-asm.h
 src/x86_64-gen.c
+src/x86_64-link.c
 t/10-path-tests.t
 t/20-tcc-exec.t
 t/30-tcc-test-suite.t
